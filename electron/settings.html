@@ -1,0 +1,779 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WatchParty - Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Modern WatchParty Settings Styles - 2025 Edition */
+
+    /* CSS Custom Properties */
+    :root {
+      /* Color Palette */
+      --primary: #6366f1;
+      --primary-hover: #5855eb;
+      --primary-light: #8b5cf6;
+      --primary-dark: #4c1d95;
+      --secondary: #0f172a;
+      --secondary-light: #1e293b;
+      --secondary-lighter: #334155;
+      --accent: #06d6a0;
+      --accent-hover: #059669;
+      --accent-light: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --success: #10b981;
+
+      /* Neutral Colors */
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --text-disabled: #64748b;
+      --border: #334155;
+      --border-light: #475569;
+      --border-focus: #6366f1;
+      --surface: rgba(30, 41, 59, 0.8);
+      --surface-hover: rgba(30, 41, 59, 0.9);
+      --surface-active: rgba(51, 65, 85, 0.9);
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+
+      /* Spacing */
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+      --spacing-2xl: 3rem;
+      --spacing-3xl: 4rem;
+
+      /* Border Radius */
+      --radius-sm: 0.375rem;
+      --radius: 0.5rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --radius-2xl: 2rem;
+      --radius-3xl: 3rem;
+
+      /* Transitions */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+      /* Typography */
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-size-xs: 0.75rem;
+      --font-size-sm: 0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+      --font-size-2xl: 1.5rem;
+      --font-size-3xl: 1.875rem;
+      --font-size-4xl: 2.25rem;
+      --font-weight-normal: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+      --font-weight-extrabold: 800;
+
+      /* Z-index */
+      --z-dropdown: 1000;
+      --z-sticky: 1020;
+      --z-fixed: 1030;
+      --z-modal-backdrop: 1040;
+      --z-modal: 1050;
+    }
+
+    /* Base Reset */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: var(--spacing-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 30% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(6, 214, 160, 0.1) 0%, transparent 50%);
+      animation: bgFloat 15s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes bgFloat {
+      0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+      50% { opacity: 0.6; transform: scale(1.1) rotate(180deg); }
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 520px;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-3xl);
+      padding: var(--spacing-3xl);
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      overflow: hidden;
+      animation: containerSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes containerSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+      animation: borderFlow 4s ease-in-out infinite;
+    }
+
+    @keyframes borderFlow {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: var(--spacing-3xl);
+      position: relative;
+    }
+
+    .logo {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--spacing-lg);
+      box-shadow: var(--shadow-glow);
+      transition: var(--transition-normal);
+      cursor: pointer;
+    }
+
+    .logo:hover {
+      transform: scale(1.05) rotate(5deg);
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.5);
+    }
+
+    .logo-glow {
+      position: absolute;
+      inset: -2px;
+      border-radius: var(--radius-2xl);
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      opacity: 0.3;
+      filter: blur(8px);
+      animation: logoPulse 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes logoPulse {
+      0% { opacity: 0.2; transform: scale(1); }
+      100% { opacity: 0.4; transform: scale(1.05); }
+    }
+
+    .logo svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+      z-index: 1;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      margin: 0 0 var(--spacing-sm);
+      background: linear-gradient(135deg, var(--text-primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.025em;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: var(--font-size-base);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Status */
+    .status {
+      padding: var(--spacing-lg) var(--spacing-xl);
+      background: var(--surface-hover);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      font-size: var(--font-size-sm);
+      color: var(--text-muted);
+      margin-bottom: var(--spacing-2xl);
+      transition: var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .status::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--text-muted);
+      transition: var(--transition-normal);
+    }
+
+    .status.success {
+      color: var(--accent);
+      border-color: rgba(6, 214, 160, 0.3);
+      background: rgba(6, 214, 160, 0.05);
+      animation: statusGlow 2s ease-in-out infinite alternate;
+    }
+
+    .status.success::before {
+      background: var(--accent);
+    }
+
+    .status.error {
+      color: var(--error);
+      border-color: rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .status.error::before {
+      background: var(--error);
+    }
+
+    .status.warning {
+      color: var(--warning);
+      border-color: rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .status.warning::before {
+      background: var(--warning);
+    }
+
+    @keyframes statusGlow {
+      0% { box-shadow: 0 0 0 0 rgba(6, 214, 160, 0.2); }
+      100% { box-shadow: 0 0 0 8px rgba(6, 214, 160, 0); }
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .section-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      margin: 0 0 var(--spacing-lg);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .section-icon {
+      width: 24px;
+      height: 24px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    /* Field Group */
+    .field-group {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    label {
+      display: block;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-sm);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    label svg {
+      width: 16px;
+      height: 16px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    /* Input */
+    input[type="text"] {
+      width: 100%;
+      padding: var(--spacing-lg) var(--spacing-xl);
+      font-size: var(--font-size-base);
+      border-radius: var(--radius-xl);
+      border: 2px solid var(--border);
+      background: var(--surface-hover);
+      color: var(--text-primary);
+      transition: var(--transition-normal);
+      font-family: var(--font-family);
+      outline: none;
+      position: relative;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--border-focus);
+      background: var(--surface-active);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      transform: translateY(-1px);
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    input[type="text"]:hover:not(:focus) {
+      border-color: var(--border-light);
+      background: var(--surface-active);
+    }
+
+    .input-help {
+      font-size: var(--font-size-xs);
+      color: var(--text-muted);
+      margin-top: var(--spacing-sm);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+    }
+
+    .input-help svg {
+      width: 14px;
+      height: 14px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .input-help a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: var(--font-weight-medium);
+      transition: var(--transition-fast);
+    }
+
+    .input-help a:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    /* Actions */
+    .actions {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-2xl);
+      flex-wrap: wrap;
+    }
+
+    /* Button System */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-lg) var(--spacing-xl);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--radius-xl);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      text-decoration: none;
+      overflow: hidden;
+      white-space: nowrap;
+      user-select: none;
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1;
+      min-width: 140px;
+      box-shadow: var(--shadow);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-ripple {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(0);
+      opacity: 0;
+      transition: var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .btn:active .btn-ripple {
+      transform: scale(1);
+      opacity: 1;
+      transition: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    .btn-primary:hover:not(:disabled)::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--secondary-light), var(--secondary-lighter));
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--secondary-lighter), var(--secondary-light));
+      color: var(--text-primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+      color: white;
+    }
+
+    .btn-success:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--accent-hover), var(--accent));
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(6, 214, 160, 0.4);
+    }
+
+    .btn-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: var(--spacing-2xl) 0;
+      position: relative;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 1px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding: var(--spacing-lg);
+      }
+
+      .container {
+        padding: var(--spacing-2xl);
+        border-radius: var(--radius-2xl);
+      }
+
+      .header h1 {
+        font-size: var(--font-size-xl);
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        min-width: auto;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: var(--spacing-xl);
+      }
+
+      .header h1 {
+        font-size: var(--font-size-lg);
+      }
+
+      .field-group {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      input[type="text"] {
+        padding: var(--spacing-md);
+        font-size: var(--font-size-sm);
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Focus States */
+    .btn:focus-visible,
+    input[type="text"]:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12,2L3.09,8.26L4.22,21.53L12,17.27L19.78,21.53L20.91,8.26L12,2M12,15.4L6.5,18.36L7.92,23L12,19.77L16.08,23L17.5,18.36L12,15.4Z" fill="currentColor"/>
+        </svg>
+        <div class="logo-glow"></div>
+      </div>
+      <h1>Server Settings</h1>
+      <p class="subtitle">Configure your WatchParty server</p>
+    </div>
+
+    <div class="status" id="status">Configure your ngrok token to enable public sharing</div>
+
+    <div class="section">
+      <h2 class="section-title">
+        <div class="section-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12,2L3.09,8.26L4.22,21.53L12,17.27L19.78,21.53L20.91,8.26L12,2M12,15.4L6.5,18.36L7.92,23L12,19.77L16.08,23L17.5,18.36L12,15.4Z" fill="currentColor"/>
+          </svg>
+        </div>
+        Public Sharing
+      </h2>
+
+      <div class="field-group">
+        <label for="ngrok">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm3 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="currentColor"/>
+          </svg>
+          ngrok Authtoken
+        </label>
+        <input id="ngrok" type="text" placeholder="Enter your ngrok authtoken..." />
+        <div class="input-help">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
+          </svg>
+          <span>Get your token at <a href="https://dashboard.ngrok.com/signup" target="_blank">ngrok.com</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="actions">
+      <button id="save" class="btn btn-primary">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" fill="currentColor"/>
+        </svg>
+        <span>Save</span>
+        <div class="btn-ripple"></div>
+      </button>
+      <button id="test" class="btn btn-success">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2,17L3.5,14.5L6.5,19L11,13L14,17H22V19H13L11,16L6.5,22L2,17M14,8C14,5.79 12.21,4 10,4C9.7,4 9.41,4.05 9.14,4.14C9.94,5.08 10.43,6.27 10.43,7.6C10.43,9.68 9.06,11.47 7.18,12.11C7.78,13.22 8.94,14 10.29,14C12.21,14 13.79,12.42 13.79,10.5C13.79,10.34 13.77,10.19 13.75,10.04C13.9,9.72 14,9.37 14,9V8Z" fill="currentColor"/>
+        </svg>
+        <span>Test ngrok</span>
+        <div class="btn-ripple"></div>
+      </button>
+      <button id="cancel" class="btn btn-secondary">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" fill="currentColor"/>
+        </svg>
+        <span>Cancel</span>
+        <div class="btn-ripple"></div>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const api = window.watchparty;
+    const ngrokInput = document.getElementById('ngrok');
+    const statusEl = document.getElementById('status');
+    const saveBtn = document.getElementById('save');
+
+    function updateStatus(text, type = '') {
+      statusEl.textContent = text;
+      statusEl.className = `status ${type}`;
+    }
+
+    api.onInitSettings((data) => {
+      // Support encrypted field (main process sends plaintext value already if available)
+      const token = (data && (data.ngrokToken || data.ngrokTokenEnc)) || '';
+      ngrokInput.value = token;
+      if (token) {
+        updateStatus('ngrok token configured', 'success');
+      } else {
+        updateStatus('Configure your ngrok token to enable public sharing');
+      }
+    });
+
+    ngrokInput.addEventListener('input', () => {
+      const token = ngrokInput.value.trim();
+      if (token) {
+        updateStatus('ngrok token configured', 'success');
+      } else {
+        updateStatus('ngrok token cleared - public sharing will be disabled');
+      }
+    });
+
+    document.getElementById('save').addEventListener('click', () => {
+      const token = ngrokInput.value.trim();
+      updateStatus('Saving settings...', '');
+      saveBtn.disabled = true;
+
+      setTimeout(() => {
+        api.send('save-ngrok-token', token);
+        // Small delay for better UX
+        setTimeout(() => {
+          window.close();
+        }, 500);
+      }, 200);
+    });
+
+    document.getElementById('cancel').addEventListener('click', () => {
+      window.close();
+    });
+
+    const testBtn = document.getElementById('test');
+    testBtn.addEventListener('click', () => {
+      const token = ngrokInput.value.trim();
+      if (!token) {
+        updateStatus('Cannot test - no token entered', '');
+        return;
+      }
+      updateStatus('Testing ngrok connectivity...', '');
+      testBtn.disabled = true;
+      api.send('save-ngrok-token', token); // ensure token persisted before test
+      setTimeout(() => {
+        api.send('test-ngrok');
+      }, 150);
+    });
+
+    api.onNgrokTestResult((data) => {
+      testBtn.disabled = false;
+      if (data && data.ok && data.url) {
+        updateStatus(`Success! Public URL: ${data.url}`, 'success');
+      } else {
+        updateStatus(`Test failed: ${data.error || 'Unknown error'}`, 'error');
+      }
+    });
+
+    // Focus input on load
+    setTimeout(() => {
+      ngrokInput.focus();
+    }, 100);
+  </script>
+</body>
+</html>

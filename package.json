@@ -1,0 +1,110 @@
+{
+  "name": "watchparty",
+  "version": "1.1.0",
+  "description": "Watch videos together with synchronized playback and public sharing via ngrok",
+  "main": "electron/main.js",
+  "author": "WatchParty Team",
+  "license": "MIT",
+  "homepage": "https://github.com/watchparty/watchparty",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/watchparty/watchparty.git"
+  },
+  "keywords": [
+    "video",
+    "streaming",
+    "synchronization",
+    "watch-party",
+    "electron",
+    "socket.io",
+    "ngrok",
+    "desktop-app"
+  ],
+  "scripts": {
+    "start": "node server/index.js",
+    "app": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "smoke": "node scripts/smoke-test.js",
+    "build:nsis": "makensis installer.nsh",
+    "dist": "npm run build:win && npm run build:nsis",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@ngrok/ngrok": "^1.5.2",
+    "compression": "^1.8.1",
+    "dotenv": "^17.2.3",
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.2.1",
+    "mime": "^4.1.0",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3",
+    "electron-updater": "^6.1.7"
+  },
+  "build": {
+    "appId": "com.watchparty.app",
+    "productName": "WatchParty",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!build/**",
+      "!*.md",
+      "!plan.md",
+      "!server_error.log",
+      "!server_test.log",
+      "!*.backup",
+      "!node_modules/.cache/**"
+    ],
+    "asarUnpack": [
+      "server/**",
+      "client/**",
+      "node_modules/**"
+    ],
+    "extraResources": [
+      {
+        "from": "build/bin",
+        "to": "bin",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "favicon.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "favicon.ico",
+      "uninstallerIcon": "favicon.ico",
+      "installerHeaderIcon": "favicon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "WatchParty",
+      "include": "installer.nsh"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "watchparty",
+      "repo": "watchparty"
+    }
+  }
+}

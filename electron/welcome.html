@@ -1,0 +1,1349 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' http://localhost:* https://*.ngrok.io https://*.ngrok.com; object-src 'none';" />
+  <title>WatchParty - Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Modern WatchParty Welcome Styles - 2025 Edition */
+
+    /* CSS Custom Properties */
+    :root {
+      /* Color Palette */
+      --primary: #6366f1;
+      --primary-hover: #5855eb;
+      --primary-light: #8b5cf6;
+      --primary-dark: #4c1d95;
+      --secondary: #0f172a;
+      --secondary-light: #1e293b;
+      --secondary-lighter: #334155;
+      --accent: #06d6a0;
+      --accent-hover: #059669;
+      --accent-light: #10b981;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --success: #10b981;
+
+      /* Neutral Colors */
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --text-disabled: #64748b;
+      --border: #334155;
+      --border-light: #475569;
+      --border-focus: #6366f1;
+      --surface: rgba(30, 41, 59, 0.8);
+      --surface-hover: rgba(30, 41, 59, 0.9);
+      --surface-active: rgba(51, 65, 85, 0.9);
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+
+      /* Spacing */
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+      --spacing-2xl: 3rem;
+      --spacing-3xl: 4rem;
+
+      /* Border Radius */
+      --radius-sm: 0.375rem;
+      --radius: 0.5rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      --radius-2xl: 2rem;
+      --radius-3xl: 3rem;
+
+      /* Transitions */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bounce: 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+      /* Typography */
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-size-xs: 0.75rem;
+      --font-size-sm: 0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+      --font-size-2xl: 1.5rem;
+      --font-size-3xl: 1.875rem;
+      --font-size-4xl: 2.25rem;
+      --font-size-5xl: 3rem;
+      --font-weight-normal: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+      --font-weight-extrabold: 800;
+
+      /* Z-index */
+      --z-dropdown: 1000;
+      --z-sticky: 1020;
+      --z-fixed: 1030;
+      --z-modal-backdrop: 1040;
+      --z-modal: 1050;
+    }
+
+    /* Base Reset */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    body {
+      font-family: var(--font-family);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-lg);
+      position: relative;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Animated Background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.1) 0%, transparent 50%);
+      animation: bgShift 20s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    @keyframes bgShift {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Main Panel */
+    .panel {
+      width: 100%;
+      max-width: 600px;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-3xl);
+      padding: var(--spacing-3xl);
+      box-shadow: var(--shadow-xl);
+      position: relative;
+      overflow: hidden;
+      animation: panelSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes panelSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+      animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0.5; transform: translateX(-100%); }
+      50% { opacity: 1; transform: translateX(100%); }
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: var(--spacing-3xl);
+      position: relative;
+    }
+
+    .logo {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--spacing-xl);
+      box-shadow: var(--shadow-glow);
+      transition: var(--transition-normal);
+      cursor: pointer;
+    }
+
+    .logo:hover {
+      transform: scale(1.05) rotate(5deg);
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+    }
+
+    .logo-glow {
+      position: absolute;
+      inset: -3px;
+      border-radius: var(--radius-2xl);
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      opacity: 0.3;
+      filter: blur(10px);
+      animation: logoGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes logoGlow {
+      0% { opacity: 0.2; transform: scale(1); }
+      100% { opacity: 0.4; transform: scale(1.1); }
+    }
+
+    .logo svg {
+      width: 40px;
+      height: 40px;
+      color: white;
+      z-index: 1;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: var(--font-size-4xl);
+      font-weight: var(--font-weight-extrabold);
+      margin: 0 0 var(--spacing-md);
+      background: linear-gradient(135deg, var(--text-primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+    }
+
+    .header p {
+      font-size: var(--font-size-lg);
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin: 0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Sections */
+    .section {
+      margin: var(--spacing-2xl) 0;
+      padding: var(--spacing-xl);
+      background: var(--surface-hover);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      transition: var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: var(--transition-normal);
+    }
+
+    .section:hover {
+      background: var(--surface-active);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .section:hover::before {
+      opacity: 1;
+    }
+
+    .section-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      margin: 0 0 var(--spacing-lg);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .section-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    /* Info Rows */
+    .info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: var(--spacing-md) 0;
+      padding: var(--spacing-lg);
+      background: var(--surface-active);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: var(--transition-fast);
+    }
+
+    .info-row:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .info-label {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .info-value {
+      font-size: var(--font-size-sm);
+      color: var(--text-primary);
+      word-break: break-all;
+      text-align: right;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      max-width: 60%;
+    }
+
+    .info-value.error {
+      color: var(--error) !important;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* Button Group */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+      margin-top: var(--spacing-xl);
+      align-items: center;
+    }
+
+    .button-row {
+      display: flex;
+      gap: var(--spacing-md);
+      width: 100%;
+      justify-content: center;
+    }
+
+    .button-row.center {
+      width: auto;
+      margin-top: var(--spacing-md);
+    }
+
+    .button-row.center .btn {
+      min-width: 200px;
+    }
+
+    /* Button System */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-lg) var(--spacing-xl);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      border-radius: var(--radius-xl);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition-normal);
+      text-decoration: none;
+      overflow: hidden;
+      white-space: nowrap;
+      user-select: none;
+      -webkit-appearance: none;
+      appearance: none;
+      min-width: 160px;
+      box-shadow: var(--shadow);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-ripple {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(0);
+      opacity: 0;
+      transition: var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .btn:active .btn-ripple {
+      transform: scale(1);
+      opacity: 1;
+      transition: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    .btn-primary:hover:not(:disabled)::before {
+      left: 100%;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--primary-hover), var(--primary));
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--secondary-light), var(--secondary-lighter));
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--secondary-lighter), var(--secondary-light));
+      color: var(--text-primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+      color: white;
+    }
+
+    .btn-success:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--accent-hover), var(--accent));
+      transform: translateY(-3px);
+      box-shadow: 0 0 30px rgba(6, 214, 160, 0.4);
+    }
+
+    .btn-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Status */
+    .status {
+      margin-top: var(--spacing-xl);
+      font-size: var(--font-size-sm);
+      color: var(--text-muted);
+      min-height: 24px;
+      text-align: center;
+      padding: var(--spacing-md) var(--spacing-lg);
+      background: var(--surface-hover);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      transition: var(--transition-normal);
+    }
+
+    .status.success {
+      color: var(--accent);
+      border-color: rgba(6, 214, 160, 0.3);
+      background: rgba(6, 214, 160, 0.1);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    .status.error {
+      color: var(--error);
+      border-color: rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .status.warning {
+      color: var(--warning);
+      border-color: rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    @keyframes statusPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(6, 214, 160, 0.3); }
+      50% { box-shadow: 0 0 0 8px rgba(6, 214, 160, 0); }
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: var(--spacing-2xl) 0;
+      position: relative;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 1px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding: var(--spacing-md);
+      }
+
+      .panel {
+        padding: var(--spacing-2xl);
+        border-radius: var(--radius-2xl);
+      }
+
+      .header h1 {
+        font-size: var(--font-size-3xl);
+      }
+
+      .header p {
+        font-size: var(--font-size-base);
+      }
+
+      .section {
+        padding: var(--spacing-lg);
+        margin: var(--spacing-xl) 0;
+      }
+
+      .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+      }
+
+      .info-value {
+        text-align: left;
+        max-width: 100%;
+      }
+
+      .button-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        min-width: auto;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .panel {
+        padding: var(--spacing-xl);
+      }
+
+      .header h1 {
+        font-size: var(--font-size-2xl);
+      }
+
+      .logo {
+        width: 64px;
+        height: 64px;
+      }
+
+      .logo svg {
+        width: 32px;
+        height: 32px;
+      }
+
+      .section {
+        padding: var(--spacing-md);
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: var(--z-modal-backdrop);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-normal);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-3xl);
+      padding: var(--spacing-3xl);
+      box-shadow: var(--shadow-xl);
+      max-width: 480px;
+      width: 100%;
+      margin: var(--spacing-lg);
+      position: relative;
+      transform: scale(0.9) translateY(20px);
+      transition: var(--transition-bounce);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: var(--spacing-2xl);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: var(--spacing-sm);
+      border-radius: var(--radius-lg);
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: var(--surface-hover);
+      color: var(--text-secondary);
+    }
+
+    .modal-logo {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: var(--radius-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--spacing-lg);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .modal-logo svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+    }
+
+    .modal-header h2 {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      margin: 0 0 var(--spacing-sm);
+      background: linear-gradient(135deg, var(--text-primary), var(--primary-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.025em;
+    }
+
+    .modal-subtitle {
+      color: var(--text-secondary);
+      font-size: var(--font-size-base);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .modal-field-group {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .modal-label {
+      display: block;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-sm);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .modal-label svg {
+      width: 16px;
+      height: 16px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: var(--spacing-lg) var(--spacing-xl);
+      font-size: var(--font-size-base);
+      border-radius: var(--radius-xl);
+      border: 2px solid var(--border);
+      background: var(--surface-hover);
+      color: var(--text-primary);
+      transition: var(--transition-normal);
+      font-family: var(--font-family);
+      outline: none;
+    }
+
+    .modal-input:focus {
+      border-color: var(--border-focus);
+      background: var(--surface-active);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .modal-input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    .modal-help {
+      font-size: var(--font-size-xs);
+      color: var(--text-muted);
+      margin-top: var(--spacing-sm);
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+    }
+
+    .modal-help svg {
+      width: 14px;
+      height: 14px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .modal-help a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: var(--font-weight-medium);
+      transition: var(--transition-fast);
+    }
+
+    .modal-help a:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-2xl);
+      flex-wrap: wrap;
+    }
+
+    .modal-status {
+      margin-top: var(--spacing-xl);
+      font-size: var(--font-size-sm);
+      color: var(--text-muted);
+      min-height: 24px;
+      text-align: center;
+      padding: var(--spacing-md) var(--spacing-lg);
+      background: var(--surface-hover);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      transition: var(--transition-normal);
+    }
+
+    .modal-status.success {
+      color: var(--accent);
+      border-color: rgba(6, 214, 160, 0.3);
+      background: rgba(6, 214, 160, 0.1);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+
+    .modal-status.error {
+      color: var(--error);
+      border-color: rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .error-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-md);
+      padding: var(--spacing-lg);
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: var(--radius-lg);
+      color: var(--error);
+    }
+
+    .error-icon {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .error-content h3 {
+      margin: 0 0 var(--spacing-sm);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--error);
+    }
+
+    .error-content p {
+      margin: var(--spacing-sm) 0;
+      line-height: 1.5;
+    }
+
+    .error-content ul {
+      margin: var(--spacing-sm) 0;
+      padding-left: var(--spacing-xl);
+    }
+
+    .error-content li {
+      margin-bottom: var(--spacing-xs);
+      line-height: 1.4;
+    }
+  </style>
+</head>
+</head>
+<body>
+  <div class="panel">
+    <div class="header">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 5v14l11-7z" fill="currentColor"/>
+        </svg>
+        <div class="logo-glow"></div>
+      </div>
+      <h1>WatchParty</h1>
+      <p>Create shared viewing experiences. Configure your video source and sharing options to get started.</p>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">
+        <div class="section-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" fill="currentColor"/>
+          </svg>
+        </div>
+        Video Configuration
+      </h2>
+      <div class="info-row">
+        <span class="info-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" fill="currentColor"/>
+          </svg>
+          Selected Video:
+        </span>
+        <span id="videoPath" class="info-value empty">(none selected)</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">
+        <div class="section-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,6V8H13V6H11M11,10V18H13V10H11Z" fill="currentColor"/>
+          </svg>
+        </div>
+        Updates
+      </h2>
+      <div class="info-row">
+        <span class="info-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,6V8H13V6H11M11,10V18H13V10H11Z" fill="currentColor"/>
+          </svg>
+          Update Status:
+        </span>
+        <span id="updateStatus" class="info-value empty">Checking for updates...</span>
+      </div>
+      <div class="button-group">
+        <div class="button-row center">
+          <button id="checkUpdates" class="btn btn-secondary" style="display: none;">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,6V8H13V6H11M11,10V18H13V10H11Z" fill="currentColor"/>
+            </svg>
+            <span>Check for Updates</span>
+            <div class="btn-ripple"></div>
+          </button>
+          <button id="downloadUpdate" class="btn btn-primary" style="display: none;">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" fill="currentColor"/>
+            </svg>
+            <span>Download Update</span>
+            <div class="btn-ripple"></div>
+          </button>
+          <button id="installUpdate" class="btn btn-success" style="display: none;">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21,2H3A2,2 0 0,0 1,4V20A2,2 0 0,0 3,22H21A2,2 0 0,0 23,20V4A2,2 0 0,0 21,2M21,20H3V4H21V20M14,8V14H10V8H14Z" fill="currentColor"/>
+            </svg>
+            <span>Install & Restart</span>
+            <div class="btn-ripple"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Combined Action Buttons - New Layout -->
+    <div class="section">
+      <div class="button-group">
+        <!-- Top Row: Config ngrok and Select Video -->
+        <div class="button-row">
+          <button id="setNgrok" class="btn btn-secondary">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12,15.4L6.5,18.36L7.92,23L12,19.77L16.08,23L17.5,18.36L12,15.4M12,3.7L18.18,9L16.54,19.22L12,16.77L7.46,19.22L5.82,9L12,3.7M12,12.25C13.24,12.25 14.25,11.24 14.25,10S13.24,7.75 12,7.75S9.75,8.76 9.75,10S10.76,12.25 12,12.25Z" fill="currentColor"/>
+            </svg>
+            <span>Config ngrok</span>
+            <div class="btn-ripple"></div>
+          </button>
+
+          <button id="chooseVideo" class="btn btn-primary">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" fill="currentColor"/>
+            </svg>
+            <span>Select Video</span>
+            <div class="btn-ripple"></div>
+          </button>
+        </div>
+        
+        <!-- Bottom Row: Start Server (centered) -->
+        <div class="button-row center">
+          <button id="start" class="btn btn-success">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8,5V19L19,12L8,5Z" fill="currentColor"/>
+            </svg>
+            <span>Start Server</span>
+            <div class="btn-ripple"></div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Status Display -->
+    <div class="status" id="status"></div>
+    <!-- ngrok Error Notice (shown when ngrok fails) -->
+    <div class="section" id="ngrokErrorNotice" style="display: none;">
+      <div class="error-notice">
+        <div class="error-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="error-content">
+          <h3>ngrok Connection Failed</h3>
+          <p>Public sharing is not available. This could be due to:</p>
+          <ul>
+            <li>Invalid or expired ngrok token</li>
+            <li>Network connectivity issues</li>
+            <li>ngrok service temporarily unavailable</li>
+          </ul>
+          <p><strong>Solution:</strong> Update your ngrok token in settings, or continue with local network sharing.</p>
+        </div>
+      </div>
+    </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="modal-close" id="modalClose">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" fill="currentColor"/>
+          </svg>
+        </button>
+        <div class="modal-logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12,2L3.09,8.26L4.22,21.53L12,17.27L19.78,21.53L20.91,8.26L12,2M12,15.4L6.5,18.36L7.92,23L12,19.77L16.08,23L17.5,18.36L12,15.4Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <h2>Server Settings</h2>
+        <p class="modal-subtitle">Configure your ngrok token to enable public sharing</p>
+      </div>
+
+      <div class="modal-field-group">
+        <label class="modal-label" for="ngrokToken">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm3 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" fill="currentColor"/>
+          </svg>
+          ngrok Authtoken
+        </label>
+        <input id="ngrokToken" type="text" class="modal-input" placeholder="Enter your ngrok authtoken..." />
+        <div class="modal-help">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52,2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="currentColor"/>
+          </svg>
+          <span>Get your token at <a href="https://dashboard.ngrok.com/signup" target="_blank">ngrok.com</a></span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="modalTest" class="btn btn-secondary" type="button">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor"/>
+          </svg>
+          <span>Test Token</span>
+          <div class="btn-ripple"></div>
+        </button>
+        <button id="modalSave" class="btn btn-primary">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" fill="currentColor"/>
+          </svg>
+          <span>Save</span>
+          <div class="btn-ripple"></div>
+        </button>
+        <button id="modalCancel" class="btn btn-secondary">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" fill="currentColor"/>
+          </svg>
+          <span>Cancel</span>
+          <div class="btn-ripple"></div>
+        </button>
+      </div>
+
+      <div class="modal-status" id="modalStatus"></div>
+    </div>
+  </div>
+
+  <script>
+    const ipc = window.watchparty;
+    const startBtn = document.getElementById('start');
+    const videoPathEl = document.getElementById('videoPath');
+    const ngrokStateEl = document.getElementById('ngrokState');
+    const statusEl = document.getElementById('status');
+
+    // Update elements
+    const updateStatusEl = document.getElementById('updateStatus');
+    const checkUpdatesBtn = document.getElementById('checkUpdates');
+    const downloadUpdateBtn = document.getElementById('downloadUpdate');
+    const installUpdateBtn = document.getElementById('installUpdate');
+
+    // Modal elements
+    const settingsModal = document.getElementById('settingsModal');
+    const modalClose = document.getElementById('modalClose');
+    const ngrokTokenInput = document.getElementById('ngrokToken');
+    const modalSave = document.getElementById('modalSave');
+    const modalTest = document.getElementById('modalTest');
+    const modalCancel = document.getElementById('modalCancel');
+    const modalStatus = document.getElementById('modalStatus');
+
+    function updateStatus(text, type = '') {
+      statusEl.textContent = text;
+      statusEl.className = `status ${type}`;
+    }
+
+    function updateModalStatus(text, type = '') {
+      modalStatus.textContent = text;
+      modalStatus.className = `modal-status ${type}`;
+    }
+
+    function showModal() {
+      settingsModal.classList.add('active');
+      ngrokTokenInput.focus();
+      // Load current token if available
+      ipc.send('get-current-ngrok-token');
+    }
+
+    function hideModal() {
+      settingsModal.classList.remove('active');
+      updateModalStatus('');
+      ngrokTokenInput.value = '';
+    }
+
+    function updateVideoPath(path) {
+      if (path) {
+        videoPathEl.textContent = path;
+        videoPathEl.className = 'info-value';
+      } else {
+        videoPathEl.textContent = '(none selected)';
+        videoPathEl.className = 'info-value empty';
+      }
+    }
+
+    function updateNgrokState(hasToken, isError = false) {
+      const errorNotice = document.getElementById('ngrokErrorNotice');
+
+      if (isError) {
+        ngrokStateEl.textContent = 'failed';
+        ngrokStateEl.className = 'info-value error';
+        ngrokStateEl.style.color = 'var(--error)';
+        if (errorNotice) errorNotice.style.display = 'block';
+      } else if (hasToken) {
+        ngrokStateEl.textContent = 'configured';
+        ngrokStateEl.className = 'info-value';
+        ngrokStateEl.style.color = 'var(--accent)';
+        if (errorNotice) errorNotice.style.display = 'none';
+      } else {
+        ngrokStateEl.textContent = '(not configured)';
+        ngrokStateEl.className = 'info-value empty';
+        ngrokStateEl.style.color = '';
+        if (errorNotice) errorNotice.style.display = 'none';
+      }
+    }
+
+    document.getElementById('chooseVideo').addEventListener('click', () => {
+      ipc.send('choose-video');
+    });
+
+    document.getElementById('setNgrok').addEventListener('click', () => {
+      showModal();
+    });
+
+    // Modal event listeners
+    modalClose.addEventListener('click', hideModal);
+    modalCancel.addEventListener('click', hideModal);
+    settingsModal.addEventListener('click', (e) => {
+      if (e.target === settingsModal) {
+        hideModal();
+      }
+    });
+
+    modalTest.addEventListener('click', () => {
+      const token = ngrokTokenInput.value.trim();
+      if (!token) {
+        updateModalStatus('Please enter a token to test', 'error');
+        return;
+      }
+
+      updateModalStatus('Testing ngrok token...', 'warning');
+      modalTest.disabled = true;
+      modalSave.disabled = true;
+
+      // Send test request to main process
+      ipc.send('test-ngrok-token', token);
+
+      // Set timeout for test response
+      setTimeout(() => {
+        if (modalTest.disabled) {
+          updateModalStatus('Test timed out - please try again', 'error');
+          modalTest.disabled = false;
+          modalSave.disabled = false;
+        }
+      }, 10000); // 10 second timeout
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && settingsModal.classList.contains('active')) {
+        hideModal();
+      }
+    });
+
+    // Listen for video selection updates
+    ipc.onVideoSelected((data) => {
+      updateVideoPath(data && data.path);
+    });
+
+    // Listen for ngrok state updates
+    ipc.onNgrokState((data) => {
+      updateNgrokState(data && data.hasToken);
+    });
+
+    // Listen for ngrok test results
+    ipc.onNgrokTestResult((result) => {
+      modalTest.disabled = false;
+      modalSave.disabled = false;
+
+      if (result.success) {
+        updateModalStatus('✅ Token is valid! Ready to save.', 'success');
+      } else {
+        updateModalStatus('❌ Token test failed: ' + (result.error || 'Unknown error'), 'error');
+      }
+    });
+
+    // Update event listeners
+    ipc.onUpdateAvailable((info) => {
+      updateStatusEl.textContent = `Update available: v${info.version}`;
+      updateStatusEl.className = 'info-value';
+      updateStatusEl.style.color = 'var(--warning)';
+      checkUpdatesBtn.style.display = 'none';
+      downloadUpdateBtn.style.display = 'inline-flex';
+      installUpdateBtn.style.display = 'none';
+    });
+
+    ipc.onUpdateNotAvailable(() => {
+      updateStatusEl.textContent = 'Up to date';
+      updateStatusEl.className = 'info-value';
+      updateStatusEl.style.color = 'var(--accent)';
+      checkUpdatesBtn.style.display = 'inline-flex';
+      downloadUpdateBtn.style.display = 'none';
+      installUpdateBtn.style.display = 'none';
+    });
+
+    ipc.onUpdateError((error) => {
+      updateStatusEl.textContent = `Update error: ${error}`;
+      updateStatusEl.className = 'info-value error';
+      checkUpdatesBtn.style.display = 'inline-flex';
+      downloadUpdateBtn.style.display = 'none';
+      installUpdateBtn.style.display = 'none';
+    });
+
+    ipc.onUpdateProgress((progress) => {
+      const percent = Math.round(progress.percent);
+      updateStatusEl.textContent = `Downloading: ${percent}%`;
+      updateStatusEl.className = 'info-value';
+      updateStatusEl.style.color = 'var(--primary)';
+    });
+
+    ipc.onUpdateDownloaded((info) => {
+      updateStatusEl.textContent = `Downloaded v${info.version} - ready to install`;
+      updateStatusEl.className = 'info-value';
+      updateStatusEl.style.color = 'var(--success)';
+      downloadUpdateBtn.style.display = 'none';
+      installUpdateBtn.style.display = 'inline-flex';
+    });
+
+    ipc.onServerLog((msg) => {
+      if (/Public URL:\s*(https?:\/\/\S+)/i.test(msg)) {
+        const url = msg.match(/Public URL:\s*(https?:\/\/\S+)/i)[1];
+        updateStatus('Public URL: ' + url, 'success');
+        updateNgrokState(true); // Mark as successfully configured
+      } else if (/NGROK_FAILED no_url/i.test(msg)) {
+        updateStatus('ngrok failed - check your token and internet connection', 'error');
+        updateNgrokState(false, true); // Mark as error state
+      } else if (/NGROK_ERROR (.+)/i.test(msg)) {
+        const errorMsg = msg.match(/NGROK_ERROR (.+)/i)[1];
+        updateStatus('ngrok error: ' + errorMsg, 'error');
+        updateNgrokState(false, true);
+      } else if (/NGROK_SKIP no_token/i.test(msg)) {
+        updateStatus('Server running (local only - no ngrok token)', 'warning');
+        updateNgrokState(false);
+      } else if (/WatchParty server running/i.test(msg)) {
+        updateStatus('Server running successfully', 'success');
+        startBtn.disabled = true;
+      } else if (/Server exited/i.test(msg)) {
+        updateStatus('Server stopped', 'warning');
+        startBtn.disabled = false;
+      } else if (/SERVER_LISTEN_ERROR (.+)/i.test(msg)) {
+        const errorMsg = msg.match(/SERVER_LISTEN_ERROR (.+)/i)[1];
+        updateStatus('Server failed to start: ' + errorMsg, 'error');
+      } else if (/^ERROR:|Uncaught Exception|Unhandled Rejection/i.test(msg)) {
+        // Only treat explicit error lines as errors to avoid transient false alarms
+        updateStatus('Server error occurred - check logs', 'error');
+      }
+    });
+
+    // Also react to direct public-url IPC events (in case UI misses the log line)
+    ipc.onPublicUrl((url) => {
+      if (url) {
+        updateStatus('Public URL: ' + url, 'success');
+        startBtn.disabled = true;
+      }
+    });
+
+    startBtn.addEventListener('click', () => {
+      updateStatus('Starting server...', 'warning');
+      startBtn.disabled = true;
+      ipc.send('server-start');
+    });
+
+    // Update button event listeners
+    checkUpdatesBtn.addEventListener('click', () => {
+      updateStatusEl.textContent = 'Checking for updates...';
+      updateStatusEl.className = 'info-value empty';
+      checkUpdatesBtn.disabled = true;
+      ipc.send('check-for-updates');
+      setTimeout(() => { checkUpdatesBtn.disabled = false; }, 3000); // Prevent spam clicking
+    });
+
+    downloadUpdateBtn.addEventListener('click', () => {
+      updateStatusEl.textContent = 'Starting download...';
+      downloadUpdateBtn.disabled = true;
+      ipc.send('download-update');
+    });
+
+    installUpdateBtn.addEventListener('click', () => {
+      updateStatusEl.textContent = 'Installing update...';
+      installUpdateBtn.disabled = true;
+      ipc.send('install-update');
+    });
+
+    // Initialize states (will be updated by IPC handlers when they arrive)
+    updateVideoPath('');
+    updateNgrokState(false);
+
+    // Prevent dragging files into the window from navigating away
+    window.addEventListener('dragover', (e) => e.preventDefault());
+    window.addEventListener('drop', (e) => e.preventDefault());
+  </script>
+</body>
+</html>
