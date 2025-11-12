@@ -31,13 +31,10 @@ async function startNgrok(port, localIP, authtoken) {
     // Stop any existing tunnel
     await stopNgrok();
 
-    // Authenticate with ngrok using the agent SDK
-    await ngrok.authtoken(authtoken);
-
-    // Use ngrok.connect API with addr option
+    // Use simple ngrok.connect API
     currentTunnel = await ngrok.connect({
-      addr: port, // ngrok can handle localhost automatically, just pass the port
-      proto: 'http' // explicitly specify HTTP protocol
+      addr: `${localIP}:${port}`,
+      authtoken: authtoken
     });
 
     const url = currentTunnel.url();
@@ -64,7 +61,7 @@ async function stopNgrok() {
   try {
     if (currentTunnel) {
       console.log('🔧 Closing ngrok tunnel...');
-      await currentTunnel.close();
+      currentTunnel.close();
       currentTunnel = null;
       console.log('✅ ngrok tunnel closed');
     }

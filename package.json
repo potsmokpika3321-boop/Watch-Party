@@ -41,8 +41,7 @@
   },
   "devDependencies": {
     "electron": "^28.3.3",
-    "electron-builder": "^24.13.3",
-    "electron-updater": "^6.1.7"
+    "electron-builder": "^24.13.3"
   },
   "build": {
     "appId": "com.watchparty.app",
@@ -101,10 +100,6 @@
       "shortcutName": "WatchParty",
       "include": "installer.nsh"
     },
-    "publish": {
-      "provider": "github",
-      "owner": "watchparty",
-      "repo": "watchparty"
-    }
+    "publish": null
   }
 }

@@ -5,7 +5,9 @@
 [![Electron](https://img.shields.io/badge/Electron-28.3.3-47848F)](https://electronjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933)](https://nodejs.org/)
 
-**Watch videos together with synchronized playback and public sharing via ngrok.** Create watch parties where everyone sees the same video at the same time, perfect for remote movie nights, presentations, or group viewing experiences.
+**Watch videos together with synchronized playback and public sharing.** Create watch parties where everyone sees the same video at the same time, perfect for remote movie nights, presentations, or group viewing experiences.
+
+![WatchParty Demo](https://via.placeholder.com/800x400/6366f1/ffffff?text=WatchParty+Screenshot)
 
 ## ✨ Features
 
@@ -16,16 +18,15 @@
 - **Event throttling**: Prevents network spam while maintaining responsiveness
 
 ### 🌐 **Public Sharing**
-- **ngrok integration**: Share your watch party with anyone worldwide using the ngrok agent SDK
+- **ngrok integration**: Share your watch party with anyone worldwide
 - **One-click sharing**: Copy public URL and share instantly
 - **Secure access**: Public URLs are temporary and require no additional setup
-- **Token testing**: Built-in token validation before sharing
 
 ### 🖥️ **Desktop Application**
-- **Native experience**: Full-featured Electron desktop app with modern UI
+- **Native experience**: Full-featured Electron desktop app
 - **File picker**: Easy video file selection with format filtering
-- **Settings persistence**: Remembers your ngrok token and video selections
-- **System tray ready**: Runs as a standalone desktop application
+- **System tray**: Runs in background with system notifications
+- **Settings persistence**: Remembers your ngrok token and preferences
 
 ### ⚡ **Performance Optimized**
 - **Video streaming**: 1MB chunks with browser caching for smooth playback
@@ -38,15 +39,24 @@
 - **Web interface**: Access via any modern web browser
 - **REST API**: Admin endpoints for video path management
 - **Health monitoring**: Built-in health checks and status monitoring
-- **Smoke testing**: Automated testing for deployment validation
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: Windows Installer (Recommended)
+
+1. **Download** the latest `WatchParty-Setup.exe` from [Releases](https://github.com/watchparty/watchparty/releases)
+2. **Install** the application
+3. **Launch** WatchParty from your desktop or start menu
+4. **Select** a video file and configure ngrok (optional)
+5. **Start** the server and share the public URL!
+
+### Option 2: From Source
+
+#### Prerequisites
 - **Node.js 18+** ([Download](https://nodejs.org/))
 - **Git** ([Download](https://git-scm.com/))
 
-### Installation & Setup
+#### Installation
 
 ```bash
 # Clone the repository
@@ -60,37 +70,27 @@ npm install
 npm run app
 ```
 
-### First Time Setup
-
-1. **Launch WatchParty**: The app opens with a modern welcome screen
-2. **Select Video**: Click "Select Video" to choose your MP4, WebM, MKV, or MOV file
-3. **Configure Sharing** (optional):
-   - Click "Config ngrok" to set up public sharing
-   - Get a free token from [ngrok.com](https://ngrok.com)
-   - Test your token before saving
-4. **Start Server**: Click "Start Server" to begin hosting
-5. **Share URL**: Once ngrok connects, copy the public URL and share with friends!
-
 ## 📖 Usage Guide
 
 ### 🏠 **As a Host**
 
-1. **Select Video**: Use the file picker to choose your video file
-2. **Configure ngrok** (optional): Set your authtoken for public sharing
-3. **Start Server**: Click the green "Start Server" button
-4. **Share URL**: Copy the generated public URL from the status area
-5. **Control Playback**: Use the video controls in the web interface
+1. **Launch** WatchParty
+2. **Select Video**: File → Open Video… (choose your MP4, WebM, MKV, or MOV file)
+3. **Configure Sharing** (optional):
+   - Public → Set ngrok authtoken… (get free token from [ngrok.com](https://ngrok.com))
+4. **Start Server**: Server → Start Server
+5. **Share URL**: Once ngrok connects, copy the public URL and share with friends!
 
 ### 👥 **As a Viewer**
 
-1. **Open Shared URL**: Click the public link shared by the host
-2. **Wait for Host**: The video will start when the host begins playback
-3. **Enjoy**: Everything syncs automatically - just watch!
+1. **Open** the shared URL in your web browser
+2. **Wait** for the host to start the video
+3. **Enjoy** synchronized playback!
 
 ### 🎮 **Controls**
 
-- **Host**: Use native HTML5 video controls (play/pause/seek)
-- **Viewer**: Playback is fully synchronized - no controls needed
+- **Host**: Use native video controls (play/pause/seek)
+- **Viewer**: Everything syncs automatically - just watch!
 - **Volume**: Each person controls their own volume locally
 
 ## 🛠️ **Advanced Configuration**
@@ -104,8 +104,8 @@ VIDEO_PATH="/path/to/your/video.mp4"
 # ngrok authentication (optional)
 NGROK_AUTHTOKEN="your_ngrok_token"
 
-# Server port (default: 3000)
-PORT=3000
+# Disable ngrok even with token
+ENABLE_NGROK="false"
 ```
 
 ### API Endpoints
@@ -114,11 +114,11 @@ PORT=3000
 - `GET /video` - Video stream
 - `GET /video-info` - Video metadata
 - `GET /public-url` - Current public URL
-- `POST /admin/video-path` - Update video path (accepts JSON: `{"path": "/path/to/video"}`)
+- `POST /admin/video-path` - Update video path
 
-### Supported Video Formats
+### Supported Formats
 
-- **MP4** (H.264/AAC) - Recommended for best compatibility
+- **MP4** (H.264/AAC) - Recommended
 - **WebM** (VP8/VP9)
 - **MKV** (various codecs)
 - **MOV** (QuickTime)
@@ -131,28 +131,38 @@ PORT=3000
 # Install dependencies
 npm install
 
-# Start development server only
+# Start development server
 npm start
 
-# Launch Electron app in development
+# Launch Electron app
 npm run app
-
-# Run smoke tests
-npm run smoke
 ```
 
 ### Building Installers
 
-#### Windows (electron-builder)
 ```bash
-# Build Windows installer
+# Install build tools
+npm install -g electron-builder
+
+# Build for current platform
+npm run build
+
+# Build Windows installer (electron-builder)
 npm run build:win
 
-# Build for all platforms
-npm run build
+# Alternative: Build NSIS installer manually (Windows)
+# Requires NSIS to be installed
+.\setup-nsis.bat    # Install NSIS if needed
+.\build-nsis.bat    # Build installer manually
+
+# Build everything
+npm run dist
 ```
 
-#### Windows (NSIS - Advanced)
+### NSIS Installer
+
+For manual Windows installer creation with full customization:
+
 ```bash
 # Install NSIS (one-time setup)
 .\setup-nsis.bat
@@ -164,14 +174,12 @@ npm run build
 "C:\Program Files (x86)\NSIS\makensis.exe" installer.nsh
 ```
 
-### Build Configuration
-
-The app uses electron-builder with the following features:
-- **App ID**: `com.watchparty.app`
-- **Product Name**: WatchParty
-- **Target Platforms**: Windows (x64, ia32)
-- **NSIS Installer**: Professional setup wizard with shortcuts
-- **File Packaging**: Optimized with asar unpacking for server files
+The NSIS installer provides:
+- Professional setup wizard
+- Desktop and Start Menu shortcuts
+- Proper uninstaller
+- Registry integration
+- File association options
 
 ## 🔧 **Troubleshooting**
 
@@ -181,7 +189,6 @@ The app uses electron-builder with the following features:
 - Ensure video file exists and is accessible
 - Check file permissions
 - Try MP4 format for best compatibility
-- Verify the file isn't corrupted
 
 **❌ "429 Too Many Requests"**
 - Rate limiting is protecting the server
@@ -189,79 +196,47 @@ The app uses electron-builder with the following features:
 - Contact host if issue persists
 
 **❌ "Autoplay blocked"**
-- Modern browsers block autoplay without user interaction
 - Click anywhere on the page to enable audio
-- The host needs to start playback manually
+- Modern browsers block autoplay without user interaction
 
 **❌ ngrok connection issues**
-- Verify your authtoken is correct and active
-- Check ngrok account status and credits
+- Verify your authtoken is correct
+- Check ngrok account status
 - Try restarting the server
-- Test token in the settings modal before saving
-
-**❌ "Server failed to start"**
-- Check if port 3000 is already in use
-- Try a different port using the PORT environment variable
-- Check server logs for detailed error messages
 
 ### Logs and Debugging
 
-- **Server logs**: View in the client interface under "Server Logs"
-- **Electron logs**: Check console output when running `npm run app`
-- **Smoke test**: Run `npm run smoke` to validate server functionality
-- **Settings**: Configuration stored in `%APPDATA%\WatchParty\settings.json`
-
-### Network Requirements
-
-- **Host**: Needs internet connection for ngrok (optional for local-only)
-- **Viewers**: Need internet connection to access public URLs
-- **Ports**: Server runs on port 3000 by default
-- **WebSocket**: Uses Socket.IO for real-time synchronization
+- **Server logs**: Check console output when starting server
+- **Browser console**: F12 → Console for client-side errors
+- **Settings**: Stored in `%APPDATA%\WatchParty\settings.json`
 
 ## 🤝 **Contributing**
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
-### Development Workflow
+### Development
 
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes with proper testing
-4. Run smoke tests: `npm run smoke`
-5. Test the full app: `npm run app`
-6. Submit a pull request
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ### Code Style
 
-- Use modern JavaScript (ES6+)
-- Follow ESLint configuration
-- Add JSDoc comments for new functions
-- Test all changes with the smoke test suite
-- Update documentation for new features
+- Use ESLint configuration
+- Follow conventional commit messages
+- Add tests for new features
+- Update documentation
 
-## 📋 **Project Structure**
+## 📋 **Roadmap**
 
-```
-watchparty/
-├── electron/           # Electron main process files
-│   ├── main.js        # Main Electron process
-│   ├── preload.js     # Preload script for security
-│   ├── welcome.html   # Setup/configuration UI
-│   └── settings.html  # Settings modal (legacy)
-├── server/            # Express.js server
-│   ├── index.js       # Main server file
-│   ├── ngrok.js       # ngrok integration
-│   ├── sync.js        # Socket.IO synchronization
-│   └── videoStream.js # Video streaming logic
-├── client/            # Web client
-│   ├── index.html     # Video player interface
-│   ├── script.js      # Client-side logic
-│   └── style.css      # Modern CSS styling
-├── scripts/           # Development scripts
-│   └── smoke-test.js  # Automated testing
-├── build/             # Build resources
-└── dist/              # Build output
-```
+- [ ] **Mobile app** (React Native)
+- [ ] **Chat integration** during watch parties
+- [ ] **Playlist support** for multiple videos
+- [ ] **Screen sharing** for presentations
+- [ ] **Recording** watch party sessions
+- [ ] **Cloud storage** integration
 
 ## 📄 **License**
 
@@ -271,19 +246,18 @@ This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.t
 
 - **Electron** - Desktop app framework
 - **Socket.IO** - Real-time communication
-- **ngrok** - Public tunneling service
+- **ngrok** - Public tunneling
 - **Express.js** - Web server framework
 - **NSIS** - Windows installer
-- **Inter Font** - Modern typography
 
 ## 📞 **Support**
 
 - **Issues**: [GitHub Issues](https://github.com/watchparty/watchparty/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/watchparty/watchparty/discussions)
-- **Documentation**: Check the server logs in-app for debugging
+- **Email**: support@watchparty.app
 
 ---
 
 **Made with ❤️ for movie nights and presentations worldwide**
 
-*WatchParty v1.1.0 - Modern synchronized video streaming for everyone*
+[![Star History Chart](https://api.star-history.com/svg?repos=watchparty/watchparty&type=Date)](https://star-history.com/#watchparty/watchparty&Date)

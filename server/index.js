@@ -180,7 +180,7 @@ function startServer() {
       startNgrok(actualPort, localIP, process.env.NGROK_AUTHTOKEN).then((url) => {
         if (url && typeof url === 'string') {
           publicUrl = url.trim();
-          log('info', `Public URL: ${publicUrl}`);
+          log('info', `NGROK_PUBLIC_URL ${publicUrl}`);
         } else {
           log('error', 'NGROK_FAILED no_url');
         }

@@ -4,7 +4,6 @@ const { spawn } = require('child_process');
 const http = require('http');
 const { app, BrowserWindow, dialog, Menu, shell, ipcMain, clipboard, safeStorage } = require('electron');
 const { pathToFileURL } = require('url');
-const { autoUpdater } = require('electron-updater');
 
 let mainWindow = null;
 let serverProcess = null;
@@ -13,40 +12,6 @@ let currentNgrokToken = process.env.NGROK_AUTHTOKEN || null;
 let publicUrl = null;
 let ngrokPollInterval = null;
 let serverPort = 3000; // dynamically selected port (fallback 3000)
-
-// ---------------------------
-// Auto-updater configuration
-// ---------------------------
-autoUpdater.autoDownload = false; // Let user choose when to download
-autoUpdater.autoInstallOnAppQuit = true; // Install on quit
-
-autoUpdater.on('checking-for-update', () => {
-  broadcastLog('Checking for updates...');
-});
-
-autoUpdater.on('update-available', (info) => {
-  broadcastLog(`Update available: ${info.version}`);
-  broadcastEvent('update-available', info);
-});
-
-autoUpdater.on('update-not-available', () => {
-  broadcastLog('No updates available');
-  broadcastEvent('update-not-available');
-});
-
-autoUpdater.on('error', (err) => {
-  broadcastLog(`Update error: ${err.message}`);
-  broadcastEvent('update-error', err.message);
-});
-
-autoUpdater.on('download-progress', (progressObj) => {
-  broadcastEvent('update-progress', progressObj);
-});
-
-autoUpdater.on('update-downloaded', (info) => {
-  broadcastLog(`Update downloaded: ${info.version}`);
-  broadcastEvent('update-downloaded', info);
-});
 
 // ---------------------------
 // Helpers to talk to renderer
@@ -193,15 +158,6 @@ function buildMenu() {
         { role: 'zoomOut' },
         { type: 'separator' },
         { role: 'togglefullscreen' },
-      ],
-    },
-    {
-      label: 'Updates',
-      submenu: [
-        {
-          label: 'Check for Updates…',
-          click: () => autoUpdater.checkForUpdates(),
-        },
       ],
     },
   ];
@@ -411,9 +367,22 @@ async function startServer() {
 // Windows / Modals
 // -----------------
 function openNgrokTokenDialog() {
-  // This function is now deprecated - settings are handled via modal in welcome.html
-  // Keep for backward compatibility but it won't be called anymore
-  console.log('openNgrokTokenDialog called but modal is now handled in welcome.html');
+  const modal = new BrowserWindow({
+    width: 500,
+    height: 320,
+    icon: path.join(__dirname, 'television.ico'),
+    parent: mainWindow || undefined,
+    modal: true,
+    resizable: false,
+    minimizable: false,
+    maximizable: false,
+    webPreferences: { preload: path.join(__dirname, 'preload.js'), nodeIntegration: false, contextIsolation: true },
+  });
+  modal.removeMenu();
+  modal.loadFile(path.join(__dirname, 'settings.html'));
+  modal.webContents.once('did-finish-load', () => {
+    modal.webContents.send('init-settings', { ngrokToken: currentNgrokToken || '' });
+  });
 }
 
 function createWindow() {
@@ -488,16 +457,6 @@ app.whenReady().then(() => {
   buildMenu();
   createWindow();
 
-  // Check for updates (only in production)
-  if (!app.isPackaged) {
-    broadcastLog('Running in development mode - skipping update check');
-  } else {
-    // Check for updates after a short delay to allow the app to fully start
-    setTimeout(() => {
-      autoUpdater.checkForUpdates();
-    }, 3000);
-  }
-
   app.on('activate', () => { if (BrowserWindow.getAllWindows().length === 0) createWindow(); });
   app.on('second-instance', () => {
     if (mainWindow) { if (mainWindow.isMinimized()) mainWindow.restore(); mainWindow.focus(); }
@@ -523,45 +482,6 @@ ipcMain.on('save-ngrok-token', (_evt, token) => {
   }
 });
 
-ipcMain.on('test-ngrok-token', async (_evt, token) => {
-  const testToken = (token || '').trim();
-  if (!testToken) {
-    if (mainWindow && !mainWindow.isDestroyed()) {
-      mainWindow.webContents.send('ngrok-test-result', { success: false, error: 'No token provided' });
-    }
-    return;
-  }
-
-  try {
-    // Test the token by attempting to authenticate with ngrok
-    const ngrok = require('@ngrok/ngrok');
-    await ngrok.authtoken(testToken);
-    
-    // Try to create a test connection (this will fail but validate the token)
-    try {
-      const testListener = await ngrok.connect({ addr: 3000, proto: 'http' });
-      await testListener.close();
-    } catch (connectError) {
-      // Connection failure is expected since we're not actually serving on 3000
-      // But if we get here, authentication succeeded
-      if (connectError.message.includes('connection refused') || connectError.message.includes('ECONNREFUSED')) {
-        // This is expected - token is valid
-      } else {
-        throw connectError;
-      }
-    }
-
-    if (mainWindow && !mainWindow.isDestroyed()) {
-      mainWindow.webContents.send('ngrok-test-result', { success: true });
-    }
-  } catch (error) {
-    console.error('ngrok token test failed:', error);
-    if (mainWindow && !mainWindow.isDestroyed()) {
-      mainWindow.webContents.send('ngrok-test-result', { success: false, error: error.message });
-    }
-  }
-});
-
 ipcMain.on('server-start', () => startServer());
 ipcMain.on('server-stop', () => stopServer());
 ipcMain.on('open-ngrok-settings', () => openNgrokTokenDialog());
@@ -583,28 +503,6 @@ ipcMain.on('navigate-home', () => {
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.loadFile(path.join(__dirname, 'welcome.html')).catch(() => {});
   }
-});
-
-ipcMain.on('get-current-ngrok-token', (_evt) => {
-  // Send current token to renderer (will be handled by modal)
-  if (mainWindow && !mainWindow.isDestroyed()) {
-    mainWindow.webContents.send('current-ngrok-token', currentNgrokToken || '');
-  }
-});
-
-// -----------------
-// Update IPC handlers
-// -----------------
-ipcMain.on('check-for-updates', () => {
-  autoUpdater.checkForUpdates();
-});
-
-ipcMain.on('download-update', () => {
-  autoUpdater.downloadUpdate();
-});
-
-ipcMain.on('install-update', () => {
-  autoUpdater.quitAndInstall();
 });
 
 // -----------------

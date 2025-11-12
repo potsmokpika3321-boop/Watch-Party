@@ -1,297 +1,103 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="WatchParty - Watch videos together with friends in real-time">
-  <meta name="theme-color" content="#6366f1">
-
-  <!-- Security Policy -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' ws: wss:; media-src 'self' blob: data:;">
-
-  <!-- Favicon and Icons -->
-  <link rel="icon" type="image/x-icon" href="/television.ico">
-  <link rel="apple-touch-icon" href="/television.ico">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Title -->
-  <title>WatchParty - Watch Together</title>
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="/style.css">
-</head>
-
-<body>
-  <!-- Main Application Container -->
-  <div class="app-container" role="application" aria-label="WatchParty Application">
-
-    <!-- Animated Background Elements -->
-    <div class="animated-bg" aria-hidden="true">
-      <div class="bg-shape shape-1"></div>
-      <div class="bg-shape shape-2"></div>
-      <div class="bg-shape shape-3"></div>
-      <div class="bg-shape shape-4"></div>
-    </div>
-
-    <!-- Application Header -->
-    <header class="app-header" role="banner">
-      <div class="header-content">
-
-        <!-- Brand Section -->
-        <section class="logo-section" aria-labelledby="brand-title">
-          <div class="logo" role="img" aria-label="WatchParty Logo">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' ws: wss:; media-src 'self' blob: data:;" />
+    <link rel="icon" type="image/x-icon" href="/television.ico" />
+    <title>WatchParty - Watch Together</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <div class="logo-section">
+          <div class="logo">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 5v14l11-7z" fill="currentColor"/>
             </svg>
-            <div class="logo-glow"></div>
           </div>
-          <div class="brand">
-            <h1 id="brand-title">WatchParty</h1>
-            <p class="brand-subtitle">Watch together, anywhere</p>
-          </div>
-        </section>
-
-        <!-- Header Actions -->
-        <nav class="header-actions" aria-label="Main navigation">
-          <button
-            id="backHomeBtn"
-            class="btn btn-secondary btn-ghost"
-            type="button"
-            aria-label="Return to home page"
-          >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z" fill="currentColor"/>
-            </svg>
-            <span>Home</span>
-            <div class="btn-ripple"></div>
+          <h1>WatchParty</h1>
+        </div>
+        <div class="nav-buttons" style="display:flex;align-items:center;gap:12px;">
+          <button id="backHomeBtn" style="background:#1e293b;color:#cbd5e1;border:1px solid #334155;padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2Z" fill="currentColor"/></svg>
+            Home
           </button>
-        </nav>
-
-      </div>
-
-      <!-- Connection Status Indicator -->
-      <section class="connection-status" aria-live="polite" aria-atomic="true">
-        <div class="status-card" id="statusIndicator" role="status">
-          <div class="status-icon" aria-hidden="true">
-            <div class="pulse-ring"></div>
-            <div class="status-dot"></div>
-          </div>
-          <div class="status-info">
-            <div class="status-label">Connection Status</div>
-            <div class="status-text" id="status">Connecting...</div>
-          </div>
-          <div class="status-glow"></div>
         </div>
-      </section>
-    </header>
+        <div class="connection-status">
+          <div class="status-indicator" id="statusIndicator">
+            <div class="pulse-dot"></div>
+            <span id="status" class="status-text">Connecting...</span>
+          </div>
+        </div>
+      </header>
 
-    <!-- Main Content Area -->
-    <main class="main-content" role="main">
-
-      <!-- Video Section -->
-      <section class="video-section" aria-labelledby="video-section-title">
-
-        <!-- Video Container -->
+      <main class="video-section">
         <div class="video-container">
-          <div class="video-wrapper">
-            <video
-              id="video"
-              controls
-              playsinline
-              preload="metadata"
-              crossorigin="anonymous"
-              aria-label="WatchParty video player"
-              poster=""
-            >
-              <track kind="captions" src="" srclang="en" label="English" default>
-              Your browser does not support the video tag. Please update your browser to watch videos.
-            </video>
-
-            <!-- Video Overlay for Initial State -->
-            <!-- Removed non-functional click to start watching overlay -->
-          </div>
+          <video id="video" controls playsinline preload="metadata" crossorigin="anonymous">
+            Your browser does not support the video tag.
+          </video>
         </div>
-
-        <!-- Session Controls Panel -->
-        <div class="controls-panel" role="region" aria-labelledby="controls-panel-title">
-          <header class="panel-header">
-            <h2 id="controls-panel-title">Session Controls</h2>
-            <div class="panel-accent" aria-hidden="true"></div>
-          </header>
-
-          <div class="controls-content">
-
-            <!-- Main Controls Column -->
-            <div class="controls-main">
-
-              <!-- User Role Section -->
-              <section class="role-section" aria-labelledby="role-section-title">
-                <div class="role-card" id="roleCard" role="status" aria-live="polite">
-                  <div class="role-icon" aria-hidden="true">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.89 1 3 1.89 3 3V21C3 22.11 3.89 23 5 23H19C20.11 23 21 22.11 21 21V9M19 9H14V4H19V9Z" fill="currentColor"/>
-                    </svg>
-                  </div>
-                  <div class="role-content">
-                    <h3 id="role-section-title" class="role-label">Your Role</h3>
-                    <div class="role-text" id="roleText">Connecting...</div>
-                  </div>
-                  <div class="role-badge" id="roleBadge" aria-hidden="true"></div>
-                </div>
-              </section>
-
-              <!-- Share Session Section -->
-              <section class="share-section" id="shareSection" aria-labelledby="share-section-title" style="display: none;">
-                <header class="section-header">
-                  <div class="section-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z" fill="currentColor"/>
-                    </svg>
-                  </div>
-                  <h3 id="share-section-title">Share Session</h3>
-                </header>
-
-                <div class="share-content">
-                  <div class="share-link-group">
-                    <label for="shareUrl" class="share-label">Public Link</label>
-                    <div class="share-input-group">
-                      <input
-                        type="url"
-                        id="shareUrl"
-                        readonly
-                        class="share-input"
-                        placeholder="Generating public link..."
-                        aria-describedby="share-help"
-                      >
-                      <button
-                        class="btn btn-primary btn-sm"
-                        id="copyLinkBtn"
-                        type="button"
-                        aria-label="Copy session link to clipboard"
-                      >
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                          <path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z" fill="currentColor"/>
-                        </svg>
-                        <span>Copy</span>
-                        <div class="btn-ripple"></div>
-                      </button>
-                    </div>
-                    <div id="share-help" class="sr-only">Share this link with friends to invite them to watch together</div>
-                  </div>
-
-                  <!-- LAN Fallback Section -->
-                  <div class="lan-fallback" id="lanFallback" style="display:none;" role="complementary" aria-live="polite">
-                    <div class="fallback-notice">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
-                      </svg>
-                      <span>Public link not ready yet. Use local network link:</span>
-                    </div>
-                    <div class="lan-links" id="lanUrls" aria-label="Local network links"></div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Action Buttons -->
-              <div class="action-buttons" role="group" aria-label="Video controls">
-                <button
-                  class="btn btn-primary btn-lg"
-                  id="startVideoBtn"
-                  type="button"
-                  style="display: none;"
-                  aria-label="Start the video session for all participants"
-                >
-                  <div class="btn-icon" aria-hidden="true">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 5v14l11-7z" fill="currentColor"/>
-                    </svg>
-                  </div>
-                  <span>Start Watching</span>
-                  <div class="btn-ripple"></div>
-                </button>
+        
+        <div class="controls-section">
+          <div class="control-card">
+            <div class="status-info">
+              <div class="role-indicator">
+                <span class="role-text" id="roleText">Connecting...</span>
               </div>
-
-            </div>
-
-            <!-- Sidebar Controls -->
-            <aside class="controls-sidebar" role="complementary" aria-label="Session information">
-
-              <!-- Server Logs Section -->
-              <section class="logs-section" id="serverLogs" aria-labelledby="logs-section-title">
-                <header class="section-header">
-                  <div class="section-icon" aria-hidden="true">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M14.73 13.31C15.52 12.24 16 10.93 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.43 0 2.74-.48 3.81-1.27L19.59 21 21 19.59l-6.27-6.28zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/>
+              <div class="share-section" id="shareSection" style="display: none;">
+                <span class="share-label">Share this link:</span>
+                <div class="share-link-container">
+                  <input type="text" id="shareUrl" readonly class="share-url-input">
+                  <button class="copy-btn" id="copyLinkBtn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16 1H4C2.9 1 2 1.9 2 3V17H4V3H16V1ZM19 5H8C6.9 5 6 5.9 6 7V21C6 22.1 6.9 23 8 23H19C20.1 23 21 22.1 21 21V7C21 5.9 20.1 5 19 5ZM19 21H8V7H19V21Z" fill="currentColor"/>
                     </svg>
-                  </div>
-                  <h3 id="logs-section-title">Server Logs</h3>
-                  <button
-                    class="btn btn-ghost btn-xs"
-                    id="toggleLogsBtn"
-                    type="button"
-                    aria-expanded="false"
-                    aria-controls="logsContent"
-                    aria-label="Toggle server logs visibility"
-                  >
-                    <span>Show</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <path d="M7 10l5 5 5-5z" fill="currentColor"/>
-                    </svg>
-                    <div class="btn-ripple"></div>
+                    Copy
                   </button>
-                </header>
-
-                <div class="logs-content" id="logsContent" style="display: none;" aria-hidden="true">
-                  <div class="logs-container">
-                    <pre id="logsText" aria-live="polite" aria-label="Server activity logs"></pre>
-                  </div>
                 </div>
-              </section>
-
-            </aside>
-
+                <div class="lan-fallback" id="lanFallback" style="display:none;margin-top:8px;font-size:12px;color:#9ca3af;">
+                  No public URL yet. You can share a local network link instead:
+                  <span id="lanUrls"></span>
+                </div>
+              </div>
+              <div class="server-logs" id="serverLogs" style="display: none;">
+                <div class="logs-header">
+                  <span class="logs-label">Server Logs:</span>
+                  <button class="toggle-logs-btn" id="toggleLogsBtn">Show</button>
+                </div>
+                <div class="logs-content" id="logsContent" style="display: none;">
+                  <pre id="logsText"></pre>
+                </div>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <button class="action-btn primary" id="startVideoBtn" style="display: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5v14l11-7z" fill="currentColor"/>
+                </svg>
+                Start Watching
+              </button>
+            </div>
           </div>
         </div>
+      </main>
+    </div>
 
-      </section>
-
-    </main>
-
-  </div>
-
-  <!-- Scripts -->
-  <script src="/socket.io/socket.io.js" defer></script>
-  <script src="/script.js" defer></script>
-
-  <!-- Inline Script for Navigation -->
-  <script>
-    (function() {
-      'use strict';
-
-      // Navigation handler for back to home button
-      const backHomeBtn = document.getElementById('backHomeBtn');
-      if (backHomeBtn) {
-        backHomeBtn.addEventListener('click', function() {
-          if (window.watchparty && typeof window.watchparty.send === 'function') {
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/script.js"></script>
+    <script>
+      // Back to home: use IPC to tell main process to load welcome page
+      (function(){
+        const btn = document.getElementById('backHomeBtn');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          if (window.watchparty) {
             window.watchparty.send('navigate-home');
           }
         });
-      }
-
-      // Video overlay keyboard accessibility
-      // Removed - overlay no longer exists
-
-    })();
-  </script>
-
-  <!-- Skip to main content link for accessibility -->
-  <a href="#video" class="sr-only sr-only-focusable" id="skip-to-content">
-    Skip to main content
-  </a>
-
-</body>
+      })();
+    </script>
+  </body>
 </html>
